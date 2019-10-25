@@ -23,7 +23,7 @@ library(mice)
 # Age 4 Demographics ####
 cDataAge4K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk4.sas7bdat") %>%
   select(cid = hicid, ses = csep, geo = csos, lang = cf11m2,
-         iq = cppvt, indig1 =zf12m2, indig2 = zf12cm) %>%
+         gender = zf02m1, indig1 =zf12m2, indig2 = zf12cm) %>%
   mutate(geo = ifelse(geo < 1, 'urban', 'rural'),
          lang = ifelse(lang == '1201', 'eng', 'other'),
          indig = case_when(
@@ -33,14 +33,15 @@ cDataAge4K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/S
            indig2 > 1 ~ 'indig',
            TRUE ~ 'nonIndig'
          ) %>% factor,
-         cohort = 'K'
+         cohort = 'K',
+         gender = ifelse(gender == 1, "Boy", "Girl")
   )
 
 cDataAge4B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb4.sas7bdat") %>%
   select(cid = hicid, ses = csep, geo = csos,
-         iq = cppvt) %>%
+         gender = zf02m1) %>%
   mutate(geo = ifelse(geo < 1, 'urban', 'rural'),
-         cohort = 'B')
+         cohort = 'B',gender = ifelse(gender == 1, "Boy", "Girl"))
 
 cDataAge0 <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb0.sas7bdat") %>%
   select(cid = hicid, indig1 =zf12m2, indig2 = zf12m3, lang = af11m2) %>%
@@ -407,13 +408,14 @@ multiplot(p1,p2,p3,p4, cols = 2)
 
 cData <- cData[,-56:-67]
 
-
+z <- function(x) (x-mean(x,na.rm=TRUE))/sd(x, na.rm=TRUE)
 cData_long <- cData %>%
   filter(y3Grade == 19 & !is.na(y3Stratum) & !is.na(y3SId) & y3Status != 4) %>%
   select(y3SId,y5MathSc,y3MathSc,ses,y3Num,y3NumSch, y5Num, y5MathScPar,y3MathScPar,
-         y3ReadSc, y5ReadSc, y5ReadScPar,y3ReadScPar, y3Read, y5Read,y3ReadSch,
-         indig,geo,cohort,lang, y3Weight) %>%
-  mutate_at(vars(geo:lang), .funs = factor)
+         y3ReadSc, y5ReadSc, y5ReadScPar,y3ReadScPar, y3Read, y5Read,y3ReadSch,y5ReadSch,
+         indig,geo,cohort,lang, gende, y3Weight) %>%
+  mutate_at(vars(geo:lang), .funs = factor) %>%
+  mutate_at(vars(y3Num,y3NumSch, y5Num,y3Read, y5Read,y3ReadSch,y5ReadSch), .funs = z)
   
 
 glimpse(cData_long)
@@ -422,9 +424,9 @@ ini <- mice(cData_long,maxit=0)
 pred1 <- ini$predictorMatrix
 pred1[,c("y3SId","y3Weight")] <- 0
 
-cData_long_imp <- mice(cData_long, method = "cart")
+cData_long_imp <- mice(cData_long, method = "cart",maxit = 5)
 plot(cData_long_imp, c("y3MathSc", "y5Num", "y3MathScPar"))
-densityplot(cData_long_imp, ~ y3MathSc+geo+y5Num+y3MathScPar)
+densityplot(cData_long_imp, ~ y3MathSc+geo+y5Num+gender)
 
-library(brms)
-fit_imp1 <- brm_multiple(y5Num ~ y3Num++geo+indig, data = cData_long_imp, chains = 2)
+save(list = c("cData_long_imp", "cData_long"),file = "data/2019-10-25_data.RData")
+
