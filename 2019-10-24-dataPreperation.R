@@ -21,7 +21,7 @@ library(mice)
 # Data Preperation
 # Child Data ====================================================
 # Age 4 Demographics ####
-cDataAge4K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk4.sas7bdat") %>%
+cDataAge4K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk4.sas7bdat") %>%
   select(cid = hicid, ses = csep, geo = csos, lang = cf11m2,
          iq = cppvt, indig1 =zf12m2, indig2 = zf12cm) %>%
   mutate(geo = ifelse(geo < 1, 'urban', 'rural'),
@@ -36,13 +36,13 @@ cDataAge4K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS
          cohort = 'K'
   )
 
-cDataAge4B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb4.sas7bdat") %>%
+cDataAge4B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb4.sas7bdat") %>%
   select(cid = hicid, ses = csep, geo = csos,
          iq = cppvt) %>%
   mutate(geo = ifelse(geo < 1, 'urban', 'rural'),
          cohort = 'B')
 
-cDataAge0 <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb0.sas7bdat") %>%
+cDataAge0 <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb0.sas7bdat") %>%
   select(cid = hicid, indig1 =zf12m2, indig2 = zf12m3, lang = af11m2) %>%
   mutate(indig = case_when(
     indig1 < 0 ~ NA_character_,
@@ -58,7 +58,7 @@ cDataAge4B <- right_join(cDataAge4B, cDataAge0)
 
 cDataAge4 <- bind_rows(cDataAge4K, cDataAge4B)
 #  Age 8 ####
-cDataAge8K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk8.sas7bdat") %>%
+cDataAge8K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk8.sas7bdat") %>%
   select(cid = hicid, y3Grade = epc06a1,y3State = estate,y3Weight = eweight,
          y3Stratum = stratum, y3MathSc = epc58b2, y3MathScPar = elc08a2a,
          y3SdqPar = easdqtb, y3SdqTeach = etsdqtb,
@@ -97,7 +97,7 @@ cDataAge8K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS
   y3NumNation = y3MeanNumScore2008,
   y3ReadNation = y3MeanReadScore2008)
 
-cDataAge8B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb8.sas7bdat") %>%
+cDataAge8B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb8.sas7bdat") %>%
   select(cid = hicid, y3Grade = epc06a1,y3State = estate,y3Weight = eweight,
          y3Stratum = stratum, y3MathSc = epc58b2, y3MathScPar = elc08a2a,
          y3SdqPar = easdqtb, y3SdqTeach = etsdqtb,
@@ -137,7 +137,7 @@ cDataAge8B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS
 
 cDataAge8 <- bind_rows(cDataAge8K, cDataAge8B)
 # Age 10 #####
-cDataAge10K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk10.sas7bdat") %>%
+cDataAge10K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrk10.sas7bdat") %>%
   select(cid = hicid, y5Grade = fpc06a1,y5State = fstate,y5Weight = fweight,
          y5Stratum = stratum, y5MathSc = fpc58b2, y5MathScPar = flc08a2a,
          y5SdqPar = fasdqtb, y5SdqTeach = ftsdqtb,
@@ -176,7 +176,7 @@ cDataAge10K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SA
   y5ReadNation = y5MeanReadScore2010
   )
 
-cDataAge10B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb10.sas7bdat") %>%
+cDataAge10B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/Confidentialised/SAS/lsacgrb10.sas7bdat") %>%
   select(cid = hicid, y5Grade = fpc06a1,y5State = fstate,y5Weight = fweight,
          y5Stratum = stratum, y5MathSc = fpc58b2, y5MathScPar = flc08a2a,
          y5SdqPar = fasdqtb, y5SdqTeach = ftsdqtb,
@@ -231,7 +231,7 @@ cData <- cData %>%
   )
 
 # Student Data ####
-cScore <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/NAPLAN/lsacnaplan.sas7bdat") %>%
+cScore <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/NAPLAN/lsacnaplan.sas7bdat") %>%
   select(cid = hicid, y3Num = y3num, y5Num = y5num, cohort,
          y3Read = y3read, y5Read = y5read,
          y3Status = y3status, y5Status = y5status) %>%
@@ -246,14 +246,14 @@ summary(cData)
 
 tapply(cData$y5Num, cData$cohort, mean, na.rm=TRUE)
 # School Data: 2008 ####
-sData2008K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
+sData2008K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
   filter(calendar_year == 2008 & HICID %in% cDataAge4K$cid) %>%
   select(cid = HICID, y3SId = School_ID, y3Sector = School_Sector_Code,
          y3NumSch = y3_N_SN_Mean_NAPLANScore, y3IndigSch = Indigenous_Student_Percent,
          y3SesSch = School_ICSEA, y3ReadSch = y3_R_SN_Mean_NAPLANScore) %>%
   mutate(cohort = 'K')
 
-sData2008B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
+sData2008B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
   filter(calendar_year == 2010 & HICID %in% cDataAge4B$cid) %>%
   select(cid = HICID, y3SId = School_ID, y3Sector = School_Sector_Code,
          y3NumSch = y3_N_SN_Mean_NAPLANScore, y3IndigSch = Indigenous_Student_Percent,
@@ -263,7 +263,7 @@ sData2008B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myscho
 sData2008 <- bind_rows(sData2008K, sData2008B)
 summary(sData2008)
 # School Data: 2010 ####
-sData2010K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
+sData2010K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
   filter(calendar_year == 2010 & HICID %in% cDataAge4K$cid) %>%
   select(cid = HICID, y5SId = School_ID, y5Sector = School_Sector_Code,
          y5NumSch = y5_N_SN_Mean_NAPLANScore, y5IndigSch = Indigenous_Student_Percent,
@@ -271,7 +271,7 @@ sData2010K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myscho
          y5ReadSch = y5_R_SN_Mean_NAPLANScore) %>%
   mutate(cohort = 'K')
 
-sData2010B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
+sData2010B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
   filter(calendar_year == 2012 & HICID %in% cDataAge4B$cid) %>%
   select(cid = HICID, y5SId = School_ID, y5Sector = School_Sector_Code,
          y5NumSch = y5_N_SN_Mean_NAPLANScore, y5IndigSch = Indigenous_Student_Percent,
@@ -282,14 +282,14 @@ sData2010B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myscho
 sData2010 <- bind_rows(sData2010K, sData2010B)
 summary(sData2010)
 # School Data: 2012 ####
-sData2012K <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
+sData2012K <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
   filter(calendar_year == 2012 & HICID %in% cDataAge4K$cid) %>%
   select(cid = HICID, y7SId = School_ID, y7Sector = School_Sector_Code,
          y7NumSch = y7_N_SN_Mean_NAPLANScore, y7IndigSch = Indigenous_Student_Percent,
          y7SesSch = School_ICSEA) %>%
   mutate(cohort = 'K')
 
-sData2012B <- readit("~/Dropbox/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
+sData2012B <- readit("~/cloudstor/Databases/LSAC/Wave 6 GR CD/MySchool/lsac_myschool_gr.sas7bdat") %>%
   filter(calendar_year == 2014 & HICID %in% cDataAge4B$cid) %>%
   select(cid = HICID, y7SId = School_ID, y7Sector = School_Sector_Code,
          y7NumSch = y7_N_SN_Mean_NAPLANScore, y7IndigSch = Indigenous_Student_Percent,
