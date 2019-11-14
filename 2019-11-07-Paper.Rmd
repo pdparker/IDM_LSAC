@@ -1,0 +1,183 @@
+---
+title             : "The title"
+shorttitle        : "Title"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "33 Berry Street North Sydney"
+    email         : "philip.parker@acu.edu.au"
+  - name          : "Philip Parker"
+    affiliation   : "1"
+
+affiliation:
+  - id            : "1"
+    institution   : "Institute for Positive Psychology and Education, Australian Catholic University"
+
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+library(tidyverse)
+library(brms)
+library(MCMCglmm)
+library(mice)
+library(ordinal)
+library(ggeffects)
+library(broom)
+
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+load("data/2019-11-12_results.rda ")
+```
+
+
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+
+
+# Results
+
+## Parents Assessment of their Child's Math and Reading RElative Ability
+```{r, warning=FALSE,message=FALSE,echo=FALSE,error=FALSE, results='asis'}
+m1 <- pool(fit1_imp_par) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+  
+m2 <- pool(fit2_imp_par) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+m3 <- pool(fit3_imp_par) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+
+m1_read <- pool(fit1_imp_par_read) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+  
+m2_read <- pool(fit2_imp_par_read) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+m3_read <- pool(fit3_imp_par_read) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+bind_rows(m1,m2,m3,m1_read,m2_read,m3_read,.id = "Model No.") %>%
+  filter(Parameter == "ses") %>%
+  select(-Parameter) %>%
+  mutate(`Model No.` =  rep(c(1,2,3),2)) %>%
+  mutate(Outcome = rep(c("Math Interest", "Reading Interest"), each = 3)) %>%
+  select(Outcome, `Model No.`, everything()) %>%
+  apa_table(., caption = "Effect of SES on Academic Interest")
+
+```
+
+
+
+## Math and Reading Interest
+```{r, warning=FALSE,message=FALSE,echo=FALSE,error=FALSE, results='asis'}
+m1 <- pool(fit1_imp) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+  
+m2 <- pool(fit2_imp) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+m3 <- pool(fit3_imp) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+
+m1_read <- pool(fit1_imp_read) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+  
+m2_read <- pool(fit2_imp_read) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+m3_read <- pool(fit3_imp_read) %>% summary(., conf.int = TRUE) %>%
+  rownames_to_column(var = "Parameter") %>%
+  select(Parameter, Estimate = estimate, `2.5 %`, `97.5 %`, p.value) %>%
+  mutate_if(is.numeric, .funs = list(~round(., 3)))
+
+bind_rows(m1,m2,m3,m1_read,m2_read,m3_read,.id = "Model No.") %>%
+  filter(Parameter == "ses") %>%
+  select(-Parameter) %>%
+  mutate(`Model No.` =  rep(c(1,2,3),2)) %>%
+  mutate(Outcome = rep(c("Math Interest", "Reading Interest"), each = 3)) %>%
+  select(Outcome, `Model No.`, everything()) %>%
+  apa_table(., caption = "Effect of SES on Academic Interest")
+
+```
+
+
+# Discussion
+

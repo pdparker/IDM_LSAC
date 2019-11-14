@@ -411,11 +411,11 @@ cData <- cData[,-56:-67]
 z <- function(x) (x-mean(x,na.rm=TRUE))/sd(x, na.rm=TRUE)
 cData_long <- cData %>%
   filter(y3Grade == 19 & !is.na(y3Stratum) & !is.na(y3SId) & y3Status != 4) %>%
-  select(y3SId,y5MathSc,y3MathSc,ses,y3Num,y3NumSch, y5Num, y5MathScPar,y3MathScPar,
+  select(y3SId,y5MathSc,y3MathSc,ses,y3Num,y3NumSch, y5Num, y5NumSch, y5MathScPar,y3MathScPar,
          y3ReadSc, y5ReadSc, y5ReadScPar,y3ReadScPar, y3Read, y5Read,y3ReadSch,y5ReadSch,
          indig,geo,cohort,lang, gende, y3Weight) %>%
   mutate_at(vars(geo:lang), .funs = factor) %>%
-  mutate_at(vars(y3Num,y3NumSch, y5Num,y3Read, y5Read,y3ReadSch,y5ReadSch), .funs = z)
+  mutate_at(vars(y3Num,y3NumSch,y5Num,y3Status,y3Read, y5Read,y3ReadSch,y5ReadSch), .funs = z)
   
 
 glimpse(cData_long)

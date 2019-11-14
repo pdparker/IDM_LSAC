@@ -2,8 +2,10 @@
 .Rhistory
 .Rapp.history
 
-#Ignore folder
+#Ignore folder and files
 data/
+
+playground.r
 
 # Session Data files
 .RData

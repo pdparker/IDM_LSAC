@@ -1,0 +1,42 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:unnamed-chunk-1}Effect of SES on Academic Interest}
+\begin{tabular}{llllll}
+\toprule
+Outcome & \multicolumn{1}{c}{Model No.} & \multicolumn{1}{c}{Estimate} & \multicolumn{1}{c}{2.5 \%} & \multicolumn{1}{c}{97.5 \%} & \multicolumn{1}{c}{p.value}\\
+\midrule
+Math Interest & 1.00 & 0.29 & 0.21 & 0.36 & 0.00\\
+Math Interest & 2.00 & -0.10 & -0.17 & -0.02 & 0.01\\
+Math Interest & 3.00 & 0.07 & -0.02 & 0.16 & 0.15\\
+Reading Interest & 1.00 & 0.30 & 0.22 & 0.38 & 0.00\\
+Reading Interest & 2.00 & -0.10 & -0.19 & -0.01 & 0.03\\
+Reading Interest & 3.00 & 0.05 & -0.04 & 0.15 & 0.28\\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{center}
+\end{table*}
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+\begin{center}
+\begin{threeparttable}
+\caption{\label{tab:unnamed-chunk-2}Effect of SES on Academic Interest}
+\begin{tabular}{llllll}
+\toprule
+Outcome & \multicolumn{1}{c}{Model No.} & \multicolumn{1}{c}{Estimate} & \multicolumn{1}{c}{2.5 \%} & \multicolumn{1}{c}{97.5 \%} & \multicolumn{1}{c}{p.value}\\
+\midrule
+Math Interest & 1.00 & 0.12 & 0.04 & 0.20 & 0.00\\
+Math Interest & 2.00 & -0.14 & -0.23 & -0.05 & 0.00\\
+Math Interest & 3.00 & -0.07 & -0.16 & 0.03 & 0.17\\
+Reading Interest & 1.00 & 0.24 & 0.16 & 0.32 & 0.00\\
+Reading Interest & 2.00 & 0.05 & -0.04 & 0.14 & 0.29\\
+Reading Interest & 3.00 & 0.12 & 0.02 & 0.21 & 0.02\\
+\bottomrule
+\end{tabular}
+\end{threeparttable}
+\end{center}
+\end{table*}
